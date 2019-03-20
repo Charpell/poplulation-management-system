@@ -1,28 +1,37 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
+const { Schema } = mongoose;
 
-const locationSchema = new mongoose.Schema({
-  name: {
+mongoose.Promise = global.Promise;
+
+const locationSchema = new Schema({
+  location: {
     type: String,
-    allowNull: false,
-    trim: true
+    trim: true,
+    unique: true,
+    required: true,
   },
-  parent: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: null,
+  female: {
+    type: Number,
+    trim: true,
+    required: true,
+  },
+  male: {
+    type: Number,
+    trim: true,
+    required: true,
   },
   population: {
-    male: {
-      type: Number,
-      default: 0
-    },
-    female: {
-      type: Number,
-      default: 0
-    }
-  },
-  children: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }]
+    type: Number,
+    trim: true,
+    required: true,
+  }
 });
 
 
-module.exports = mongoose.model('Location', locationSchema);
+const Location =  mongoose.model('Location', locationSchema);
+
+
+module.exports = {
+  Location
+}
